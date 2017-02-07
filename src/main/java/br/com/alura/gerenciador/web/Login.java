@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,9 +23,11 @@ public class Login extends HttpServlet {
         final Usuario usuario = new UsuarioDAO().buscaPorEmailESenha(email, senha);
         final PrintWriter writer = resp.getWriter();
         if(usuario == null) {
-            writer.println("<html><body>Usu·rio ou senha invalida</body></html");
+            writer.println("<html><body>Usu√°rio ou senha invalida</body></html");
         } else {
-            writer.println("<html><body>Usu·rio "+email+" logado</body></html");
+        	Cookie cookie = new Cookie("usuario.logado", email);
+        	resp.addCookie(cookie);
+            writer.println("<html><body>Usu√°rio "+email+" logado</body></html");
         }
      
     }
