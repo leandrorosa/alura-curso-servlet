@@ -25,20 +25,20 @@ public class FiltroDeAuditoria implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		String requestURI = req.getRequestURI();
+		final HttpServletRequest req = (HttpServletRequest) request;
+		final String requestURI = req.getRequestURI();
 		
-		Cookies cookies = new Cookies(req.getCookies());		
+		final Cookies cookies = new Cookies(req.getCookies());		
 		final Cookie usuario = cookies.getUsuarioLogado();
 		
 		
 		if(usuario == null) {
 			System.out.println("Usuário <deslogado> acessando a URI:"+requestURI);
 		} else {
-			usuario.setMaxAge(600000);
-			HttpServletResponse resp = (HttpServletResponse) response;
+			usuario.setMaxAge(60*10);
+			final HttpServletResponse resp = (HttpServletResponse) response;
 			resp.addCookie(usuario);
 			System.out.println("Usuário "+usuario.getValue()+" acessando a URI:"+requestURI);
 		}
@@ -49,7 +49,7 @@ public class FiltroDeAuditoria implements Filter {
 	
 
 	@Override
-	public void init(FilterConfig arg0) throws ServletException {
+	public void init(final FilterConfig arg0) throws ServletException {
 
 
 	}
